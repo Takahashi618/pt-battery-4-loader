@@ -557,7 +557,7 @@ PACK_ORDER_ADDED: str = "added"
 PACK_ORDER_OPTIONS: list[tuple[str, str]] = [
     (PACK_ORDER_COUNT, tr("中身の多い順", "Most samples first")),
     (PACK_ORDER_NAME, tr("名前順", "By name")),
-    (PACK_ORDER_MTIME, tr("更新の新しい順", "Most recently updated first")),
+    (PACK_ORDER_MTIME, tr("更新の新しい順", "Recently updated first")),
     (PACK_ORDER_ADDED, tr("追加した順。古いものから", "Order added, oldest first")),
 ]
 
@@ -851,7 +851,7 @@ def filter_samples(
 def search_result_summary(count: int) -> str:
     """絞り込み結果の件数を伝える読み上げ文言（作者の別のアプリと同じ文言）。"""
     if count == 0:
-        return tr("該当するサンプルはありませんでした", "No matching samples found")
+        return tr("該当するサンプルはありませんでした", "No samples found")
     return tr(f"{count}件見つかりました", f"{plural(count, 'sample')} found")
 
 

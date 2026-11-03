@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from i18n import tr
 
-VERSION = "3.2.0"
+VERSION = "3.2.1"
 APP_NAME = "PT Battery 4 Loader"
 COPYRIGHT = "Copyright (c) 2026 Takahashi"
 

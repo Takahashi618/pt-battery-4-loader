@@ -2866,7 +2866,7 @@ def _help_text_en() -> str:
         "  file name has loop, groove, beat, or the like, and otherwise as one-shots.\n"
         "Command+G: choose a pack (Splice pack names. Type the first letters to jump)\n"
         "Command+Shift+G: cycle the pack order\n"
-        "  Most samples first, by name, most recently updated first, order added\n"
+        "  Most samples first, by name, recently updated first, order added\n"
         "Command+U: turn favorites only on or off\n"
         "Command+R: clear all filters\n"
         "When you change a filter, the number of samples is read out.\n"

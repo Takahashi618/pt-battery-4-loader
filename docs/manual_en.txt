@@ -1,6 +1,6 @@
 ﻿PT Battery 4 Loader Manual
 
-Version 3.2.0. The author is Takahashi. This software and this manual were made with AI (Claude by Anthropic; see chapter 21).
+Version 3.2.1. The author is Takahashi. This software and this manual were made with AI (Claude by Anthropic; see chapter 21).
 Contents. There are 23 chapters.
 1. What this app does
 2. Requirements
@@ -56,7 +56,7 @@ The app's window and speech follow your Mac's language settings. The app uses wh
 
 -- 3.1 Placing the app
 
-1. Open the zip file you received in Finder (select it and press Command+O). A folder named "PTBattery4Loader_3.2.0" appears in the same place
+1. Open the zip file you received in Finder (select it and press Command+O). A folder named "PTBattery4Loader_3.2.1" appears in the same place
 2. Move "PT Battery 4 Loader.app" from the folder to the Applications folder. In Finder, select the .app and press Command+C, then in the Applications folder press Option+Command+V (move)
 3. You can keep the manual and other documents anywhere
 
@@ -164,7 +164,7 @@ Command+Shift+G switches the order of packs. The order is remembered for next ti
 Command+Shift+G cycles through these in this order. The table has 4 rows and 2 columns: Order, When to use it.
 - Order: Most samples first / When to use it: The first setting. Start from the biggest packs when you do not know the name
 - Order: By name / When to use it: Jump by first letters when you remember the name
-- Order: Most recently updated first / When to use it: By the date of the newest sample in each pack. Get back to packs you used recently
+- Order: Recently updated first / When to use it: By the date of the newest sample in each pack. Get back to packs you used recently
 - Order: Order added, oldest first / When to use it: By the date of the oldest sample in each pack. Go through packs in the order you added them to Splice
 
 -- 7.4 Favorites
@@ -519,5 +519,6 @@ Pro Tools is a product of Avid Technology, Battery 4 and Komplete Kontrol of Nat
 
 == 23. Version history
 
+- 3.2.1 (2026-11-03): English wording now matches the author's other apps
 - 3.2.0 (2026-11-03): Renamed to PT Battery 4 Loader. The window, speech, and manual are now also available in English, following the Mac's language settings
 - 3.1.0 (2026-10-25): First release

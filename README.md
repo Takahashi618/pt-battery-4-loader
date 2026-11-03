@@ -7,7 +7,7 @@ VoiceOver とキーボードだけで使えるように作っています。名�
 
 - 動く環境: Apple シリコン（M1 以降）の Mac、macOS 14 以降、Pro Tools、Native Instruments Battery 4、VoiceOver。
   作者は macOS 15.7.8、Pro Tools 2026.4.1、Battery 4.3.1 で確かめています
-- 使うだけなら: [Releases](https://github.com/Takahashi618/pt-battery-4-loader/releases) にある `PTBattery4Loader_3.2.0.zip` を開き、中の「はじめにお読みください.txt」を読んでください
+- 使うだけなら: [Releases](https://github.com/Takahashi618/pt-battery-4-loader/releases) にある `PTBattery4Loader_3.2.1.zip` を開き、中の「はじめにお読みください.txt」を読んでください
 - 使い方: [docs/manual.txt](docs/manual.txt)（HTML 版は [docs/manual.html](docs/manual.html)。ダウンロードしてブラウザで開きます）
 - ライセンス: MIT ライセンス（Copyright (c) 2026 Takahashi）。全文は [LICENSE.txt](LICENSE.txt)。
   配布版のアプリに入っているほかの人の部品の条件は [同梱部品のライセンス.txt](同梱部品のライセンス.txt)
@@ -52,7 +52,7 @@ The app's window and speech follow your Mac's language settings: English or Japa
 
 - Requirements: a Mac with Apple silicon (M1 or later), macOS 14 or later, Pro Tools, Native Instruments Battery 4, VoiceOver.
   Tested on macOS 15.7.8, Pro Tools 2026.4.1, and Battery 4.3.1
-- To use it: open `PTBattery4Loader_3.2.0.zip` from [Releases](https://github.com/Takahashi618/pt-battery-4-loader/releases) and read “README (English).txt” inside
+- To use it: open `PTBattery4Loader_3.2.1.zip` from [Releases](https://github.com/Takahashi618/pt-battery-4-loader/releases) and read “README (English).txt” inside
 - Manual: [docs/manual_en.txt](docs/manual_en.txt) (HTML version: [docs/manual_en.html](docs/manual_en.html))
 - License: MIT License (Copyright (c) 2026 Takahashi). Full text in [LICENSE.txt](LICENSE.txt).
   Third-party components in the packaged app: [同梱部品のライセンス.txt](同梱部品のライセンス.txt)

@@ -1,4 +1,4 @@
-﻿PT Battery 4 Loader 3.2.0: third-party licenses / 同梱している部品のライセンス
+﻿PT Battery 4 Loader 3.2.1: third-party licenses / 同梱している部品のライセンス
 
 This .app contains the parts listed below (the list was made from the files
 actually packaged). The full terms of each part follow, part by part.
