@@ -1,0 +1,3 @@
+/* PT Battery 4 Loader: the English permission texts are the defaults in Info.plist. */
+"CFBundleName" = "PT Battery 4 Loader";
+"CFBundleDisplayName" = "PT Battery 4 Loader";

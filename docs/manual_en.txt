@@ -1,0 +1,523 @@
+﻿PT Battery 4 Loader Manual
+
+Version 3.2.0. The author is Takahashi. This software and this manual were made with AI (Claude by Anthropic; see chapter 21).
+Contents. There are 23 chapters.
+1. What this app does
+2. Requirements
+3. Installing
+4. Getting started: register your sample folders and scan
+5. Preparing Pro Tools: keep only one Battery window open
+6. The window layout
+7. Finding samples
+8. Sort order and name reading
+9. Previewing
+10. Loading into Battery 4
+11. Choosing the load target Battery
+12. Choosing a cell and moving samples
+13. Kits
+14. Settings
+15. Keyboard commands and menus
+16. Notification sounds and speech
+17. Files the app creates
+18. Troubleshooting
+19. Removing the app
+20. Limits and cautions
+21. Made with AI
+22. License
+23. Version history
+
+== 1. What this app does
+
+This app lets you find samples such as drums, from Splice or your own folders, listen to them, and load them into the cells of Native Instruments Battery 4 inserted in Pro Tools. It is designed to be used with VoiceOver and the keyboard only. "PT" in the name stands for Pro Tools.
+- Register your sample folders and scan, and the sounds in them (WAV, AIFF, REX) appear in a list
+- Filter by file name, type (one-shot or loop), pack, and favorites. The type is decided from the sound's length and file name
+- In the list, Space previews and Return loads into the selected cell (such as A1). The app performs the same action as dragging with the mouse, on your behalf
+- The app checks whether the load worked and reads out the result. WAV files that Battery 4 cannot read are converted to a readable form without changing the sound before loading
+- If several tracks have Battery inserted, you choose the load target by switching the track of the Battery window. You can also send a sample to the same cell of every Battery at once
+- You can save a combination of samples per cell as a "kit"
+
+VoiceOver reads out the results. Operations that take time also signal their start and end with short sounds.
+
+== 2. Requirements
+
+The table has 7 rows and 3 columns: Item, Needed, Notes.
+- Item: A Mac with Apple silicon (M1 or later) / Needed: Yes / Notes: It does not run on Intel Macs
+- Item: macOS 14 or later / Needed: Yes / Notes: Tested by the author on macOS 15.7.8
+- Item: Pro Tools / Needed: Yes / Notes: Tested by the author on Pro Tools 2026.4.1. Other DAWs cannot be used for loading
+- Item: Native Instruments Battery 4 / Needed: Yes / Notes: Inserted on a Pro Tools track. Tested by the author on Battery 4.3.1
+- Item: VoiceOver / Needed: Assumed / Notes: Results are read out by VoiceOver. The sound signals play even without VoiceOver
+- Item: Samples / Needed: Yes / Notes: WAV, AIFF, and REX (.rx2) sounds. MP3 and the like are not handled
+- Item: Splice / Needed: Helpful / Notes: If you register your Splice folder, you can filter by pack
+
+You do not need to install Python or anything else. It is all inside the app.
+The app's window and speech follow your Mac's language settings. The app uses whichever of English and Japanese comes first in your preferred languages, and English if neither is listed. To use a different language for this app only, go to System Settings, General, Language & Region, Applications. The language is decided when the app opens, so reopen the app after changing it.
+
+== 3. Installing
+
+-- 3.1 Placing the app
+
+1. Open the zip file you received in Finder (select it and press Command+O). A folder named "PTBattery4Loader_3.2.0" appears in the same place
+2. Move "PT Battery 4 Loader.app" from the folder to the Applications folder. In Finder, select the .app and press Command+C, then in the Applications folder press Option+Command+V (move)
+3. You can keep the manual and other documents anywhere
+
+-- 3.2 Opening it for the first time
+
+This app is not notarized by Apple. So when you first open an app taken from a zip you got from the internet, macOS may stop it from opening. If so, open it in one of these two ways.
+
+- Method 1: Open it from System Settings
+
+1. Try to open the app once. When a message says it cannot be opened, close it with Done
+2. Open Privacy & Security in System Settings and go down to Security. There is a sentence saying that PT Battery 4 Loader was blocked, and an Open Anyway button
+3. Press Open Anyway and approve with your password or Touch ID
+4. Open the app again, and choose Open Anyway when asked to confirm
+
+The wording may differ a little depending on the macOS version. From the second time on, it opens normally.
+
+- Method 2: Remove the quarantine mark in Terminal
+
+After moving the app to the Applications folder, run this one line in Terminal.
+xattr -dr com.apple.quarantine "/Applications/PT Battery 4 Loader.app"
+This removes the "quarantine" mark put on files from the internet. After that, it opens normally.
+
+-- 3.3 Accessibility permission (required)
+
+The app loads by performing the mouse drag on your behalf. This needs the macOS Accessibility permission. Without it, you can search and listen, but not load.
+1. When you first open the app, it reads out that the permission is missing, and macOS shows a request. Choose Open System Settings in the request
+2. PT Battery 4 Loader is listed in Privacy & Security, Accessibility in System Settings. Turn its switch on (approve with your password or Touch ID)
+3. Quit the app (Command+Q) and open it again. The permission does not take effect while it stays open
+
+If it does not work, press "Check Accessibility Permission" in the app's Settings window (Command+Comma). It reads out the permission state and the name of the app to allow, and opens the right place in System Settings. If PT Battery 4 Loader is not in the list, press "Copy Path of App to Allow", press the Add button below the list in System Settings, paste the path with Command+Shift+G, and choose it.
+
+-- 3.4 When macOS asks for other permissions
+
+- If you are asked to allow PT Battery 4 Loader to control Pro Tools, choose Allow. It is used to bring Pro Tools to the front for track switches and cell moves
+- You may be asked for permission to control Finder or System Events. This is for the backup load method (10.5) and is not normally used
+- When you scan samples in the Documents, Desktop, or Downloads folders or on external drives, you are asked for file access. Choose Allow. Otherwise the sounds in that folder cannot be read
+
+-- 3.5 Replacing it with a new version
+
+Quit the app, then replace the old PT Battery 4 Loader.app in the Applications folder with the new one. Settings, favorites, and kits carry over (see chapter 17 for where they are).
+Replacing it may remove the Accessibility permission. If it is in the System Settings list and turned on but cannot load, turn the switch off and on again, or remove it from the list with the Remove button and add it again, then reopen the app. If the same name appears twice in the list, turn both on.
+
+== 4. Getting started: register your sample folders and scan
+
+1. Press Command+Comma to open the Settings window. You start at the search folder list
+2. Press Tab to reach "Add Folder", press Return, and choose a folder with samples (for Splice, the Splice folder in your home folder). You can register as many as you like
+3. Press Escape to close Settings, and press Command+O to scan. When it finishes, a glass sound plays and something like "Scan complete. 3127 samples found. 553 packs." is read out
+4. Press Command+I to go to the sample list, choose with the up and down arrows, and preview with Space
+
+If you scan without registering a folder, the whole Mac is searched with Spotlight. This can take time if there are many files.
+The scan also reads the length of each sample (about a second for several thousand). The length is used to tell the types apart (chapter 7) and for sorting by length. When you add or replace samples, press Command+O again.
+
+== 5. Preparing Pro Tools: keep only one Battery window open
+
+The load target is the Battery 4 window (plug-in window) open in Pro Tools. The app works out the cell position from where that window is. A Battery whose window is not open cannot be loaded.
+
+-- Always keep only one Battery window open
+
+Pro Tools opens plug-in windows on top of each other in the same place. The app cannot tell which of the overlapping windows will get the sample. Carrying it anyway could overwrite a cell on another track and lose the sample that was there.
+So when two or more Battery windows are open, or when a window of another plug-in such as an EQ is on top of it, the app stops the load and reads out why. Keep only the one you use and close the others.
+You choose the target track by switching the track of that one window (chapter 11). You do not need several windows.
+If no Battery window is open, Command+Shift+O opens the first one (the app clicks the insert slot in the Pro Tools Mix window).
+Do not minimize the Battery window or cover it with another window. The app cannot load unless the cell position is visible.
+
+== 6. The window layout
+
+There are four windows: the main window, Kit Manager (Command+K), Settings (Command+Comma), and the Command List help (Command+Shift+K). Windows other than the main window close with Escape or Command+W.
+These are the places Tab stops at in the main window, in order. The name is the first sentence of what VoiceOver reads. Shift+Tab goes back, and after the last one you return to the first. The table has 10 rows and 3 columns: Order, Spoken name, Kind.
+- Order: 1 / Spoken name: Filter / Kind: Text field
+- Order: 2 / Spoken name: Scan / Kind: Button
+- Order: 3 / Spoken name: Sort order / Kind: Pop-up
+- Order: 4 / Spoken name: Filter by type / Kind: Pop-up
+- Order: 5 / Spoken name: Filter by pack / Kind: Pop-up
+- Order: 6 / Spoken name: Favorites only / Kind: Checkbox
+- Order: 7 / Spoken name: Sample list / Kind: List
+- Order: 8 / Spoken name: Load target cell / Kind: Pop-up
+- Order: 9 / Spoken name: Load target Battery / Kind: Pop-up
+- Order: 10 / Spoken name: Load / Kind: Button
+
+At the very bottom is a status field with the same text that was read out. A small square window appears near the target cell only during a load (it is the start of the drag; see 10.5).
+
+== 7. Finding samples
+
+Filters can be combined. Only samples that meet all of them stay in the list. When you clearly change a filter (Command+J, G, U, R, and so on), the count is read out, as in "120 samples found". If nothing is found, a low sound plays and "No matching samples found" is read out.
+
+-- 7.1 Filter by file name
+
+Press Command+F to go to the filter field, and type part of a file name. The list narrows with each character (the count is not read for each character, so that speech does not get in the way). Upper and lower case are not distinguished. Spaces are part of the text searched for ("kick 808" finds only names with that exact sequence).
+In the filter field, the usual editing keys work, such as Command+A to select all and Command+V to paste.
+
+-- 7.2 Type (one-shot or loop)
+
+Command+J cycles through "Type: all", "One-shot", and "Loop". The type is decided as follows.
+1. A sound longer than the boundary is a loop
+2. A sound at or under the boundary is a loop if its file name has loop, ループ, _lp, groove, or beat, and otherwise a one-shot
+3. A sound whose length is unknown is decided by its file name alone
+
+The boundary is 2 seconds at first. You can change it from 0.5 to 8 seconds with "Length to treat as a one-shot" in the Settings window.
+
+-- 7.3 Pack (Splice)
+
+A Splice library has a folder for each pack under a folder named "packs". Command+G goes to the pack choice; choose with the up and down arrows, or type the first letters of the pack name to jump. Choices show the count, as in "Pack name 120 items".
+Pack choices are built from the result of the other filters. For example, if you type kick as the file name and then press Command+G, only packs with kick in them are listed.
+Command+Shift+G switches the order of packs. The order is remembered for next time.
+Command+Shift+G cycles through these in this order. The table has 4 rows and 2 columns: Order, When to use it.
+- Order: Most samples first / When to use it: The first setting. Start from the biggest packs when you do not know the name
+- Order: By name / When to use it: Jump by first letters when you remember the name
+- Order: Most recently updated first / When to use it: By the date of the newest sample in each pack. Get back to packs you used recently
+- Order: Order added, oldest first / When to use it: By the date of the oldest sample in each pack. Go through packs in the order you added them to Splice
+
+-- 7.4 Favorites
+
+Select a sample in the list and press Command+D to add it to favorites. Press again to remove it. Favorites are read as "[Favorite]" in the list. Command+U switches whether to show favorites only.
+
+-- 7.5 Clearing filters
+
+Command+R clears the file name, type, pack, and favorites-only filters, and returns to all samples.
+
+== 8. Sort order and name reading
+
+-- 8.1 Sort order
+
+There are 13 sort orders. The one you choose is remembered for next time. The selected sample stays selected when you change the order.
+Command+T cycles through these in this order. The table has 13 rows and 2 columns: Order, How it sorts.
+- Order: Name ascending / How it sorts: File names in ascending order (the first setting)
+- Order: Name descending / How it sorts: File names in descending order
+- Order: Format (extension) / How it sorts: Grouped by format (extension), by name within each. The format is read at the start of each row
+- Order: Size, smallest first / How it sorts: Smallest files first. The size is read at the start of each row
+- Order: Size, largest first / How it sorts: Largest files first. The size is read at the start of each row
+- Order: Date, newest first / How it sorts: Most recently modified first. The date is read at the start of each row
+- Order: Date, oldest first / How it sorts: Least recently modified first. The date is read at the start of each row
+- Order: By folder / How it sorts: Grouped by folder. The folder name is read at the start of each row
+- Order: Length, shortest first / How it sorts: Shortest first. The length is read at the start of each row. Unknown lengths come last
+- Order: Length, longest first / How it sorts: Longest first. The length is read at the start of each row. Unknown lengths come last
+- Order: Favorites first / How it sorts: Favorites grouped at the top
+- Order: Recently used / How it sorts: Recently loaded samples at the top, with [Recently used] read at the start of the row
+- Order: Random / How it sorts: Shuffled. The order stays the same until you choose it again
+
+-- 8.2 Name reading
+
+Sample file names often have many symbols and digits and can be hard to follow by ear. Name reading makes the names in the list easier to hear. The actual file names do not change.
+Command+Y cycles through these in this order. The examples show the reading of the file name 01_Kick_808.wav. The table has 3 rows and 2 columns: Mode, Example.
+- Mode: off / Example: 01_Kick_808.wav
+- Mode: symbols cleaned up / Example: 01 Kick 808
+- Mode: digits as words / Example: oh one Kick eight oh eight
+
+With digits as words, 0 is read "oh" the way model numbers are read (808 is "eight oh eight"). Full-width digits are read the same way.
+
+== 9. Previewing
+
+Press Space in the list to play the selected sample. Press Space again on the same sample to stop. If you move to another sample and press Space, the previous sound stops and the new one plays. Escape also stops it. You can move around the list while a sound is playing.
+
+== 10. Loading into Battery 4
+
+-- 10.1 How to load
+
+1. In Pro Tools, keep the target Battery 4 window open, and only that one (chapter 5)
+2. Choose the cell to load into (chapter 12). It is A1 at first
+3. Select a sample in the list and press Return (or the Load button)
+4. "Loading kick.wav into Inst1, cell A1. Starts in 3 seconds. Press Escape to stop. Please wait." is read out, and it counts 3, 2, 1
+5. The app drags the sample to the cell
+6. "Load complete: kick.wav into Battery 4 on Inst1, cell A1." is read out, and a high sound plays
+
+After a successful load, the target cell moves to the next one (A2 after A1). Select the next sample and press Return to fill the cells in order. To keep the cell from moving, turn off "Move to the next cell after loading" in the Settings window. The countdown is 3 seconds at first, and can be set from 0 to 9 seconds in Settings.
+You can stop at any time with Escape (during the countdown and during a track switch too). Stopping is not a failure. "Load stopped" is read out, along with where anything had already been loaded.
+During the drag, the app moves the mouse pointer. Wait without touching the keyboard or mouse.
+
+-- 10.2 What the results mean
+
+- "Load complete: ...": it loaded (the app has confirmed that Battery 4 accepted it)
+- "Load failed: the drop was not accepted at cell A1": the drag happened, but Battery 4 did not accept it at that position. The cell position may be off. Calibrate in the Settings window (14.1)
+- When a load fails, the sample's file path is copied to the clipboard. You can use it to load by hand in the Battery 4 window
+
+-- 10.3 When nothing is carried
+
+When it is not certain where the sample would go, the app stops without dragging and reads out why and what to do next. This is to avoid overwriting a sample already in a cell.
+- There is no Accessibility permission (3.3)
+- No Battery window is open, two or more are open, or another plug-in's window overlaps it (chapter 5). It also stops if a window opens during the countdown
+- The load target track is not in the current Pro Tools session. Choose a track again with Command+Shift+T, or set the load target back to "Auto" with Command+B
+- The track of the Battery window could not be switched
+- Another app's window is covering the cell position. The name of the covering window is read out. Close or move it and press Return again
+- No Battery window was found at the cell position. This happens when part of the Battery window is off screen, for example. Move it so that it is on screen
+
+-- 10.4 Automatic conversion of WAV files Battery 4 cannot read
+
+Some samples, such as those from Splice, have tempo markers and the like embedded, and play in Pro Tools but do not load into a Battery 4 cell. The app checks the file before loading, and if it is one of these, it reads out "Because it has embedded markers, converting to a format Battery 4 can read." and turns it into a plain WAV with the standard macOS tools before loading.
+- Integer audio of 24 bits or less keeps its quality as is. Floating point and 32-bit audio become 24-bit integers (with very slight rounding)
+- Converted files are kept in ~/Library/Application Support/Battery4Loader/Converted/ and reused from the second time on. The name is the same as the original, so the name of the Battery 4 cell does not change
+- Kits saved in Battery 4 point to the converted files. If you delete this folder, those kits cannot find their sounds
+- Favorites, recently used, and the app's kits record the location of the original file
+
+-- 10.5 How the drag works
+
+Battery 4 cells are not visible as controls to VoiceOver or to other apps. So the app works out the cell position as a ratio of the Battery 4 window (it is recalculated when the window moves, so you do not need to capture positions again). Then it synthesizes the same action as dragging with the mouse, and drops the sample on the cell.
+- The drag starts from a small square window that appears near the target cell. It stays in front of everything, so the Battery window does not hide it
+- Before dragging, the app checks that the start is this window and that the cell position is the Pro Tools window. If not, nothing is carried (10.3)
+- The app checks whether Battery 4 accepted it and reads out the result
+- Only if the drag cannot start from that window, it drags from the file's icon shown in Finder as a backup. In that case it cannot confirm acceptance, so "Dragged ... through Finder. Check that it loaded." is read out
+- When Pro Tools comes to the front for a track switch or the like, this app returns to the front before reading the result (because VoiceOver does not read announcements from apps that are not in front)
+
+== 11. Choosing the load target Battery
+
+If several tracks have Battery inserted, you choose the target track. You keep one window and switch its track.
+- Command+Shift+T: switch the track of the Battery window. Choose from the list of tracks with Battery inserted and press Return. The app operates the Track Selector of the Battery window, and remembers that track as the load target
+- Command+B: cycle the load target: "Auto" (the track now showing in the window), "All Batteries", and the tracks of the open windows. You can also choose with the load target Battery pop-up in the main window
+- All Batteries: one load sends the same sample to the same cell of every track with Battery inserted. The window is switched track by track as it is carried. When finished, it reads out where it went and where it stopped
+- Command+Shift+O: if no Battery window is open, opens the first one. If one is already open, it does nothing
+
+If the remembered load target track is not in the current session, the app tells you instead of loading (the window does not keep going around looking for the track).
+Command+Shift+B shortens how the load target is read. You hear it often, so choose the length you like.
+Command+Shift+B cycles through these in this order. The examples show the reading for Battery 4 on track Inst1. The table has 3 rows and 2 columns: Reading, Example.
+- Reading: Track name and plug-in name / Example: Battery 4 on Inst1
+- Reading: Track name only / Example: Inst1
+- Reading: Short form / Example: Inst 1
+
+If a Battery is inserted but not found, its window is closed. The app reads the insert slots in the Pro Tools Mix window and explains why, as in "3 Battery instances inserted, but only 1 open. The window is closed for Inst1, Inst2...".
+
+== 12. Choosing a cell and moving samples
+
+Cell names are the same as in Battery 4. Rows are A, B, C, D from the top, and columns 1 to 12 from the left, 48 cells in all. A2 is to the right of A1, and B1 is directly below A1.
+- Command+1 to 9: choose column 1 to 9 of the current row (Command+4 in row C gives C4)
+- Command+Semicolon: cycle the row through A, B, C, D
+- Columns from 10 on are chosen with the load target cell pop-up in the main window
+- If you give a cell a label such as "Kick", it is read as "A1 Kick". Set labels in the Settings window (chapter 14)
+
+Command+M moves the sample in the current cell to another cell (what went into A2 to A6, for example). Choose the destination and press Return, and the app drags from cell to cell in the Battery window. The app cannot confirm that it moved, so "Ran the move ... Please check that it moved" is read out. Please check by ear.
+
+== 13. Kits
+
+A kit is a combination of samples per cell. It also remembers the load target track at that time. Press Command+K to open Kit Manager.
+These are the places Tab stops at in Kit Manager, in order. The table has 13 rows and 3 columns: Order, Spoken name, Kind.
+- Order: 1 / Spoken name: Kit name / Kind: Text field
+- Order: 2 / Spoken name: Saved kits / Kind: List
+- Order: 3 / Spoken name: Cell assignments / Kind: List
+- Order: 4 / Spoken name: Assign Selected Sample to Current Cell / Kind: Button
+- Order: 5 / Spoken name: New Kit / Kind: Button
+- Order: 6 / Spoken name: Save / Kind: Button
+- Order: 7 / Spoken name: Save As / Kind: Button
+- Order: 8 / Spoken name: Load Selected Kit for Editing / Kind: Button
+- Order: 9 / Spoken name: Duplicate Selected Kit / Kind: Button
+- Order: 10 / Spoken name: Delete Selected Kit / Kind: Button
+- Order: 11 / Spoken name: Clear Current Cell / Kind: Button
+- Order: 12 / Spoken name: Export to Battery 4 / Kind: Button
+- Order: 13 / Spoken name: Preview Kit / Kind: Button
+
+-- 13.1 Building and saving a kit
+
+1. Select a sample in the main window
+2. Choose a cell in the cell assignments list in Kit Manager (if you do not, the load target cell in the main window is used)
+3. Press "Assign Selected Sample to Current Cell". "Assigned kick.wav to cell A1" is read out
+4. Enter a kit name and save with Command+S (or "Save")
+
+Assignments are records inside this app. Loading into Battery 4 is done with Return in the main window.
+
+-- 13.2 Loading, duplicating, and deleting
+
+- Press Return in the saved kits list to load that kit for editing. The load target also switches to the one remembered in the kit
+- To keep it under another name, change the kit name and press "Save As"
+- Deleting, and overwriting a different kit, ask you to confirm. Return carries it out and Escape cancels. A deleted kit cannot be restored
+
+-- 13.3 Previewing and exporting
+
+- Command+P: plays the assigned cells in order from A1, 0.8 seconds each. Escape stops it
+- Command+E: copies the kit's samples to ~/Documents/Native Instruments/Battery 4/Kits/KitName_samples/. The mapping to cells is written to _kit_definition.json in the same place. Copying the same kit again does not duplicate the same files
+
+To call it up from Komplete Kontrol, save it to the Kits folder with File, Save Kit As in Battery 4, and update the Komplete Kontrol library.
+
+== 14. Settings
+
+Press Command+Comma to open the Settings window. Changes are saved right away. Close it with Escape or Command+W.
+These are the places Tab stops at in the Settings window, in order, with their values when the app is first opened. Buttons show short text on screen, apart from the spoken name. The table has 20 rows and 4 columns: Spoken name, Text on screen, Kind, First value.
+- Spoken name: Search folders / Text on screen: None / Kind: List / First value: No value
+- Spoken name: Add Folder / Text on screen: Add Folder / Kind: Button / First value: No value
+- Spoken name: Remove Selected / Text on screen: Remove Selected / Kind: Button / First value: No value
+- Spoken name: Countdown seconds before loading / Text on screen: None / Kind: Pop-up / First value: 3 seconds
+- Spoken name: Move to the next cell after loading / Text on screen: Move to the next cell after loading / Kind: Checkbox / First value: On
+- Spoken name: Longest length to treat as a one-shot / Text on screen: None / Kind: Pop-up / First value: 2.0 seconds or less
+- Spoken name: Cell to label / Text on screen: None / Kind: Pop-up / First value: A1
+- Spoken name: Cell label / Text on screen: Example: Kick / Kind: Text field / First value: Empty
+- Spoken name: Set for This Cell / Text on screen: Set for This Cell / Kind: Button / First value: No value
+- Spoken name: Set Standard Kit Labels / Text on screen: Set Standard Kit Labels / Kind: Button / First value: No value
+- Spoken name: Clear All Labels / Text on screen: Clear All Labels / Kind: Button / First value: No value
+- Spoken name: Number of grid rows / Text on screen: None / Kind: Pop-up / First value: 4 rows
+- Spoken name: Number of grid columns / Text on screen: None / Kind: Pop-up / First value: 12 columns
+- Spoken name: Detect Battery / Text on screen: Detect Battery / Kind: Button / First value: No value
+- Spoken name: Check Accessibility Permission / Text on screen: Check Accessibility Permission / Kind: Button / First value: No value
+- Spoken name: Copy Path of App to Allow / Text on screen: Copy Path of App to Allow / Kind: Button / First value: No value
+- Spoken name: Capture Top Left Cell / Text on screen: Capture Top Left Cell / Kind: Button / First value: No value
+- Spoken name: Capture Bottom Right Cell / Text on screen: Capture Bottom Right Cell / Kind: Button / First value: No value
+- Spoken name: Save Calibration from 2 Points / Text on screen: Save Calibration from 2 Points / Kind: Button / First value: No value
+- Spoken name: Reset Positions / Text on screen: Reset Positions / Kind: Button / First value: No value
+
+"Set Standard Kit Labels" labels the cells from the top left, going across: A1 Kick, A2 Snare, A3 Closed Hat, A4 Open Hat, B1 Clap, B2 Rim, B3 Tom Low, B4 Tom Mid, C1 Tom High, C2 Ride, C3 Crash, C4 Perc.
+
+-- 14.1 Calibrating cell positions (only if they are off)
+
+The first values for cell positions were measured in the Battery 4 window. Normally you do not need to calibrate. Do this only if loads end with "the drop was not accepted".
+1. Press "Detect Battery" in the Settings window and check that the Battery window is found
+2. Put the VoiceOver cursor on the top left cell of the Battery window, and move the mouse pointer there with VO+Command+F5
+3. Go back to the Settings window and press "Capture Top Left Cell". The pointer position after the count of 5, 4, 3, 2, 1 is remembered (you may switch windows with Command+Tab during the count)
+4. Capture the bottom right cell (D12 at first) in the same way
+5. Press "Save Calibration from 2 Points". If the direction is reversed or it is off screen, the reason is read out and it is not saved
+
+"Reset Positions" returns to the measured values at any time. If you change the number of grid rows or columns, the captured positions are cleared, so capture them again.
+
+-- 14.2 Checking the permission
+
+"Check Accessibility Permission" reads out the permission state and the name of the app to allow. If there is no permission, it opens the right place in System Settings (3.3).
+
+== 15. Keyboard commands and menus
+
+Single keys (such as F or S) conflict with VoiceOver and are not used. The app's operations are menu items, used with Command keys. Inside the app, Command+Shift+K opens the Command List (help).
+These keys are used in lists and on buttons, and are not menu items. The table has 9 rows and 3 columns: Where, Key, Action.
+- Where: Sample list / Key: Up and Down arrows / Action: Move between samples
+- Where: Sample list / Key: Space / Action: Preview. Press again on the same sample to stop
+- Where: Sample list / Key: Return (also Enter on the numeric keypad) / Action: Load the selected sample into the selected cell
+- Where: Anywhere (main window) / Key: Escape / Action: Stop the preview. Stop a load, track switch, or cell move
+- Where: Buttons / Key: Return or Space / Action: Press the button (in every window)
+- Where: Saved kits in Kit Manager / Key: Return / Action: Load that kit for editing
+- Where: Kit Manager / Key: Escape / Action: Stop the kit preview if it is playing. Otherwise close the window
+- Where: Settings, Kit Manager, Help / Key: Escape or Command+W / Action: Close the window
+- Where: Confirmation and choice dialogs / Key: Return / Escape / Action: The first button (Run, Delete, and so on) / Cancel
+
+These are the items in the menu bar. Press VO+M to go to the menu bar, and use the left and right arrows to choose a menu. Items with a key work with that key from any window. The table has 42 rows and 3 columns: Menu, Item, Key.
+- Menu: App (PT Battery 4 Loader) / Item: About PT Battery 4 Loader / Key: None (choose from the menu)
+- Menu: App (PT Battery 4 Loader) / Item: Hide / Key: Command+H
+- Menu: App (PT Battery 4 Loader) / Item: Quit / Key: Command+Q
+- Menu: Edit / Item: Undo / Key: Command+Z
+- Menu: Edit / Item: Redo / Key: Command+Shift+Z
+- Menu: Edit / Item: Cut / Key: Command+X
+- Menu: Edit / Item: Copy / Key: Command+C
+- Menu: Edit / Item: Paste / Key: Command+V
+- Menu: Edit / Item: Select All / Key: Command+A
+- Menu: Actions / Item: Scan / Key: Command+O
+- Menu: Actions / Item: Go to Filter / Key: Command+F
+- Menu: Actions / Item: Go to List / Key: Command+I
+- Menu: Actions / Item: Add or Remove Favorite / Key: Command+D
+- Menu: Actions / Item: Cycle Sort Order / Key: Command+T
+- Menu: Actions / Item: Cycle Name Reading / Key: Command+Y
+- Menu: Actions / Item: Command List (Help) / Key: Command+Shift+K
+- Menu: Actions / Item: Cycle Load Target Battery / Key: Command+B
+- Menu: Actions / Item: Cycle Load Target Reading / Key: Command+Shift+B
+- Menu: Actions / Item: Switch Battery Window Track / Key: Command+Shift+T
+- Menu: Actions / Item: Open Battery Window / Key: Command+Shift+O
+- Menu: Actions / Item: Settings / Key: Command+Comma
+- Menu: Filter / Item: Cycle Type (All, One-Shot, Loop) / Key: Command+J
+- Menu: Filter / Item: Choose Pack / Key: Command+G
+- Menu: Filter / Item: Cycle Pack Order (Most Samples, By Name, Recently Updated, Order Added) / Key: Command+Shift+G
+- Menu: Filter / Item: Favorites Only On or Off / Key: Command+U
+- Menu: Filter / Item: Clear All Filters / Key: Command+R
+- Menu: Kit / Item: Open Kit Manager / Key: Command+K
+- Menu: Kit / Item: New Kit / Key: Command+N
+- Menu: Kit / Item: Save Kit / Key: Command+S
+- Menu: Kit / Item: Export to Battery 4 / Key: Command+E
+- Menu: Kit / Item: Preview Kit / Key: Command+P
+- Menu: Cell / Item: Column 1 of This Row / Key: Command+1
+- Menu: Cell / Item: Column 2 of This Row / Key: Command+2
+- Menu: Cell / Item: Column 3 of This Row / Key: Command+3
+- Menu: Cell / Item: Column 4 of This Row / Key: Command+4
+- Menu: Cell / Item: Column 5 of This Row / Key: Command+5
+- Menu: Cell / Item: Column 6 of This Row / Key: Command+6
+- Menu: Cell / Item: Column 7 of This Row / Key: Command+7
+- Menu: Cell / Item: Column 8 of This Row / Key: Command+8
+- Menu: Cell / Item: Column 9 of This Row / Key: Command+9
+- Menu: Cell / Item: Cycle Row (A to B, C, D) / Key: Command+Semicolon
+- Menu: Cell / Item: Move This Cell's Sample to Another Cell / Key: Command+M
+
+== 16. Notification sounds and speech
+
+The table has 4 rows and 2 columns: Sound, When it plays.
+- Sound: High sound (Tink) / When it plays: Load complete, kit saved, calibration saved, permission check finds permission, one or more samples found
+- Sound: Low sound (Basso) / When it plays: Load failed, nothing carried, an error, zero samples found
+- Sound: Short sound (Pop) / When it plays: Counting before a load (once a second), choosing a cell, switching a sort order or the like
+- Sound: Glass sound (Glass) / When it plays: A scan has finished
+
+Important messages (load results, favorites, errors, and so on) interrupt speech already in progress.
+
+== 17. Files the app creates
+
+The table has 6 rows and 2 columns: Location, Contents.
+- Location: ~/.battery4_loader_settings.json / Contents: Settings: search folders, cell positions (as ratios of the Battery window), load target, cell labels, favorites, recently loaded samples (up to 20), sort order, and so on
+- Location: ~/.battery4_loader_kits.json / Contents: Saved kits
+- Location: ~/Library/Application Support/Battery4Loader/Converted/ / Contents: Samples converted to a form Battery 4 can read (10.4)
+- Location: ~/Documents/Native Instruments/Battery 4/Kits/ / Contents: Samples of exported kits
+- Location: ~/Library/Logs/Battery4Loader.log / Contents: A record of the permission state at startup (a clue when something goes wrong)
+- Location: /Applications/PT Battery 4 Loader.app / Contents: The app itself
+
+~ is your home folder. Files with names starting with a dot are hidden in Finder. Type the location in Go to Folder (Command+Shift+G) in the Finder Go menu to open them.
+
+== 18. Troubleshooting
+
+-- "Cannot load automatically without Accessibility permission"
+
+Allow it, then reopen the app (3.3). The permission may be removed after replacing the app with a new version (3.5).
+
+-- "No Battery window is open" or "2 Battery windows are open"
+
+Keep exactly one Battery window open (chapter 5). If there is none, Command+Shift+O opens one.
+
+-- "The window of ... is covering the Battery window"
+
+A plug-in other than Battery, such as an EQ, has its window open in the same place. Close that window and try again.
+
+-- "The load target Inst2 was not found in the current Pro Tools session"
+
+The remembered load target track is not in the open session. Choose a track again with Command+Shift+T, or set the load target back to "Auto" with Command+B.
+
+-- "The drop was not accepted"
+
+The cell position is off. This can happen when you change the size of the Battery window, for example. Calibrate in the Settings window (14.1). Also try "Reset Positions".
+
+-- "Nothing was carried ... because ... was covering the cell"
+
+Another app's window (a confirmation message, a control panel, or the like) is over the Battery cell. Close or move the window named in the message and try again.
+
+-- Only certain samples do not load into a cell
+
+It may be a WAV format Battery 4 cannot read. The app usually fixes this automatically (10.4). If it does not read out that it is converting and the sample still does not load, load it by hand in the Battery 4 window. After a failed load, the file path is on the clipboard.
+
+-- A scan finds nothing
+
+Check that search folders are registered in the Settings window. External drives and the Documents folder need macOS access permission (3.4).
+
+-- You cannot hear the speech
+
+Check that VoiceOver is on (Command+F5). The sound signals play even without VoiceOver.
+
+-- If you still cannot tell
+
+~/Library/Logs/Battery4Loader.log records the permission state at startup. It is a useful clue when asking for help.
+
+== 19. Removing the app
+
+1. Quit the app (Command+Q) and move "PT Battery 4 Loader.app" in the Applications folder to the Trash
+2. To remove settings and kits too, move .battery4_loader_settings.json and .battery4_loader_kits.json in your home folder to the Trash. The log is ~/Library/Logs/Battery4Loader.log
+3. Kits saved in Battery 4 may use the folder of converted samples (~/Library/Application Support/Battery4Loader). Make sure they do not before deleting it
+4. Remove PT Battery 4 Loader from the Accessibility list in System Settings with the Remove button
+
+== 20. Limits and cautions
+
+- This is for Pro Tools only. It cannot load into Battery 4 in other DAWs such as Logic Pro. It does not run on Intel Macs
+- Keep only one Battery window open (chapter 5). Overlapping windows are not loaded
+- Loading and moving between cells synthesize mouse actions. Do not touch the keyboard or mouse while they run. This app comes to the front while loading
+- A cell move (Command+M) cannot be confirmed. Please check by ear
+- If Battery is inserted in two slots of one track, only the one showing in the window is loaded
+- Changing the size of the Battery 4 window, or using a Battery 4 version with a different window layout, can put cell positions off. Calibrate in that case
+- Supported sounds are WAV, AIFF, and REX
+- The English text has been checked by tests, but has not been heard with English VoiceOver, or tried on an English macOS or English Pro Tools, by the author
+
+== 21. Made with AI
+
+This software was made by the author (Takahashi) using AI (Claude by Anthropic), under the author's direction and judgment. Most of the program code and of the text, including this manual, was written by the AI. Behavior with Pro Tools, Battery 4, and VoiceOver was checked on the author's Mac.
+Parts made by AI may not be protected by copyright, depending on the laws of your country or region. The license is granted within the rights the author may hold (chapter 22). You can also read the version and this statement in "About PT Battery 4 Loader" in the app menu.
+
+== 22. License
+
+This software is distributed under the MIT License. The copyright notice is "Copyright (c) 2026 Takahashi". You may use, copy, modify, distribute, and sell it free of charge. When you distribute it, include the copyright notice and permission notice. There is no warranty. The author is not responsible for anything that results from its use. The full text is in "ライセンス.txt" (License) in the package.
+The app contains parts made by others, such as Python, PyObjC, and PyInstaller. Their terms are in "同梱部品のライセンス.txt" (Third-party licenses).
+Pro Tools is a product of Avid Technology, Battery 4 and Komplete Kontrol of Native Instruments, Splice of Splice, and VoiceOver of Apple Inc. This app is not affiliated with those companies.
+
+== 23. Version history
+
+- 3.2.0 (2026-11-03): Renamed to PT Battery 4 Loader. The window, speech, and manual are now also available in English, following the Mac's language settings
+- 3.1.0 (2026-10-25): First release
